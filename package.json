@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "serve": "babel-node ./app/app.js",
+    "test": "jest",
+    "coverage": "jest --collectCoverage",
+    "lint": "npx eslint"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "eslint": "^5.16.0",
+    "jest": "^23.6.0",
+    "jest-bdd": "^0.4.0",
+    "nightwatch": "^1.1.10",
+    "nodemon": "^1.18.9",
+    "supertest": "^3.4.0"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "lowdb": "^1.0.0",
+    "pug": "^2.0.3"
+  }
+}
