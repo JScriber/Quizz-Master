@@ -21,6 +21,13 @@ npm run coverage
 
 Then open up the file : `coverage/lcov-report/index.html`. Note: `coverage` will be generated at the root of the project.
 
+## Launch e2e tests
+```
+npm run e2e
+```
+
+**Important**: The end-to-end tests require you to launch the server beforehand. As a result, launch `npm run serve` in another shell before launching `npm run e2e`.
+
 ## Static analysis
 ```
 npm run lint [target file]
@@ -30,7 +37,7 @@ npm run lint [target file]
 ## Documentation
 - [Jest](https://jestjs.io/docs/en/using-matchers)
 - [Jest BDD wrapper](https://github.com/konnorandrews/jest-bdd)
-- [Nightwatch](https://nightwatchjs.org/gettingstarted/#settings-file)
+- [Nightwatch](https://nightwatchjs.org/guide)
 
 ## Drivers for Nightwatch (end-to-end tests)
 - [Selenium](http://selenium-release.storage.googleapis.com/index.html)

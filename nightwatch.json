@@ -1,43 +1,47 @@
 {
-  "src_folders" : ["e2e"],
-  "output_folder" : "reports",
-  "custom_commands_path" : "",
-  "custom_assertions_path" : "",
-  "page_objects_path" : "./pages",
-  "globals_path" : "",
+  "src_folders": ["e2e"],
+  "output_folder": "reports",
+  "custom_commands_path": "",
+  "custom_assertions_path": "",
+  "globals_path": "",
 
-  "selenium" : {
-    "start_process" : true,
-    "server_path" : "bin/selenium-server-standalone-3.9.1.jar",
-    "log_path" : "",
-    "port" : 4444,
-    "cli_args" : {
-      "webdriver.chrome.driver" : "bin/chromedriver",
-      "webdriver.gecko.driver" : "bin/geckodriver"
+  "selenium": {
+    "start_process": true,
+    "server_path": "bin/selenium-server-standalone-3.9.1.jar",
+    "log_path": "",
+    "port": 4444,
+    "cli_args": {
+      "webdriver.chrome.driver": "bin/chromedriver",
+      "webdriver.gecko.driver": "bin/geckodriver"
     }
   },
 
-  "test_settings" : {
-    "default" : {
-      "launch_url" : "http://localhost",
-      "selenium_port"  : 4444,
-      "selenium_host"  : "localhost",
+  "test_settings": {
+    "default": {
+      "launch_url": "http://localhost:8080",
+      "selenium_port": 4444,
+      "selenium_host": "localhost",
       "silent": true,
-      "screenshots" : {
-        "enabled" : true,
-        "on_failure" : true,
-        "on_error" : false,
-        "path" : "screens"
+      "screenshots": {
+        "enabled": false,
+        "on_failure": true,
+        "on_error": false,
+        "path": "screens"
       },
       "desiredCapabilities": {
         "browserName": "firefox",
-        "marionette": true
+        "marionette": true,
+        "acceptInsecureCerts": true,
+        "moz:firefoxOptions": {
+          "args": ["--headless"]
+        }
       }
     },
 
-    "chrome" : {
+    "chrome": {
       "desiredCapabilities": {
-        "browserName": "chrome"
+        "browserName": "chrome",
+        "args": ["headless"]
       }
     }
   }
