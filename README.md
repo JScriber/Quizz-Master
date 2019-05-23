@@ -21,6 +21,11 @@ npm run coverage
 
 Then open up the file : `coverage/lcov-report/index.html`. Note: `coverage` will be generated at the root of the project.
 
+## Static analysis
+```
+npm run lint [target file]
+```
+
 # Others
 ## Documentation
 - [Jest](https://jestjs.io/docs/en/using-matchers)
