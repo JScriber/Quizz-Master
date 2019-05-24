@@ -5,15 +5,15 @@ module.exports = {
       // Given.
       .waitForElementVisible("body")
       .useXpath() // Every selector now must be xpath.
-      .waitForElementVisible("//td[text()='Est-ce que vous aimez le PHP ?']")
+      .waitForElementVisible("//td[text()='De quel côté agit le PHP ?']")
       .frameParent()
       // When.
+      .pause(4000)
       .click("//button[text()='Delete']")
-      .pause(2000)
+      .pause(4000)
       // Then.
       .assert.urlEquals("http://localhost:8080/POST")
-
-      
+      .pause(4000)
       // .expect.element("//td[text()='Est-ce que vous aimez le PHP ?']")
       // .to.be.not.visible
       .end();

@@ -14,8 +14,11 @@ export class CategoryManager {
     return CategoryManager.instance;
   }
 
-  /** Get the list of all the categories. */
-  getAll() {
+  /**
+   * Get the list of all the categories.
+   * @returns {*} - All the categories.
+   */
+  get() {
     return findAllCategories();
   }
 }

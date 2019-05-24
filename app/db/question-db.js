@@ -57,14 +57,14 @@ export const findAll = async () => {
 export const findOne = async (id) => {
   const questions = await findAll();
 
-  return questions.find(q => q.id === id);
+  return questions.find(q => q.id === Number.parseInt(id));
 };
 
 /**
  * Persists the question in the database.
  * @param {*} body 
  */
-export const save = async (body) => {
+export const post = async (body) => {
 
   const db = await database;
 
@@ -82,3 +82,39 @@ export const save = async (body) => {
   return db.get('questions').push(data).write();
 }
 
+/**
+ * Updates the question in the database.
+ * @param {*} body 
+ */
+export const put = async (body) => {
+
+  const db = await database;
+
+  const questions = (await db.get('questions').value()).map(q => {
+
+    if (q.id === body.id) {
+      q = {
+        ... body,
+        category: Number.parseInt(body.category),
+        difficulty: Number.parseInt(body.difficulty),
+      };
+    }
+
+    return q;
+  });
+
+  return db.set('questions', questions).write();
+}
+
+
+/**
+ * Removes an element from the JSON database.
+ * @param {*} id - ID of the item.
+ */
+export const remove = async (id) => {
+  const adapter = await database;
+  let data = adapter.get('questions').value();
+  data = data.filter(e => e.id !== +id);
+
+  return adapter.set('questions', data).write();
+}
