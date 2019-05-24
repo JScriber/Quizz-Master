@@ -1,28 +1,40 @@
-// module.exports = {
-//   "step one: navigate to google": function(browser) {
-//     browser
-//       .url("https://www.google.com")
-//       .waitForElementVisible("body", 1000)
-//       .setValue("input[type=text]", "nightwatch")
-//       .waitForElementVisible("input[name=btnK]", 1000);
-//   },
-
-//   "step two: click input": function(browser) {
-//     browser
-//       .click("input[name=btnK]")
-//       .pause(1000)
-//       .assert.containsText("#main", "Night Watch")
-//       .end();
-//   }
-// };
-this.createNewGame = function(browser) {
-  browser
-    .url("http://localhost:8080/game/start")
-    // .waitForElementVisible("body", 1000)
-    // .setValue('input[type=text]', 'nightwatch')
-    // .waitForElementVisible('input[name=btnK]', 1000)
-    // .click('input[name=btnK]')
-    .pause(10000)
-    // .assert.containsText('#main', 'The Night Watch')
-    .end();
+module.exports = {
+  "1) L’utilisateur souhaite créer une nouvelle partie. Ses saisies sont correctes. ": function(
+    browser
+  ) {
+    browser
+      .url("http://localhost:8080/game/start")
+      .waitForElementVisible("#containerNewGame", 1000)
+      // Given.
+      .setValue("input[name=name]", "jean")
+      .setValue("input[name=difficulty]", "2")
+      .setValue("input[name=categorie]", "PHP")
+      .pause(2000)
+      // When.
+      .click("input[type=submit]")
+      .pause(2000)
+      // Then.
+      .assert.urlEquals(
+        "http://localhost:8080/game/start?name=jean&difficulty=2&categorie=PHP"
+      )
+      .end();
+  },
+  "2) L’utilisateur souhaite créer une nouvelle partie. Ses saisies sont cependant incorrectes. ": function(
+    browser
+  ) {
+    browser
+      .url("http://localhost:8080/game/start")
+      .waitForElementVisible("#containerNewGame", 1000)
+      // Given.
+      .setValue("input[name=name]", "")
+      .setValue("input[name=difficulty]", "2")
+      .setValue("input[name=categorie]", "PHP")
+      .pause(2000)
+      // When.
+      .click("input[type=submit]")
+      .pause(2000)
+      // Then.
+      .assert.urlEquals("http://localhost:8080/game/start")
+      .end();
+  }
 };
