@@ -1,4 +1,4 @@
-import { findAll, findOne } from "../db/question-db";
+import { findAll, findOne, save } from "../db/question-db";
 
 /**
  * Service to manipulate question.
@@ -22,5 +22,10 @@ export class QuestionManager {
   /** Get one question. */
   getOne(id) {
     return findOne(id);
+  }
+
+  /** Saves the question. */
+  async save(body) {
+    await save(body);
   }
 }
