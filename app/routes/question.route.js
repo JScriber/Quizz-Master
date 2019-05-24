@@ -14,7 +14,7 @@ const questionRouter = express.Router();
  */
 questionRouter.get('/', async (req, res) => {
   const manager = QuestionManager.getInstance();
-  const questions = await manager.getAll();
+  const questions = await manager.get();
 
   res.render('question-list.pug', { data: questions });
 });
@@ -29,7 +29,7 @@ questionRouter.get('/new', async (req, res) => {
   const categoryManager = CategoryManager.getInstance();
 
   // Fetch the data.
-  const categories = await categoryManager.getAll();
+  const categories = await categoryManager.get();
   const difficulties = [1, 2, 3];
 
   res.render('question-form.pug', {
@@ -43,12 +43,18 @@ questionRouter.get('/new', async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-questionRouter.post('/new', ({ body }, res) => {
+questionRouter.post('/new', async ({ body }, res) => {
 
   const questionManager = QuestionManager.getInstance();
-  questionManager.save(body);
+  const response = await questionManager.save(body);
 
-  res.redirect('/question');
+  if (response.success === true) {
+    res.redirect('/question');
+  } else {
+    res.render('question-error.pug', {
+      errors: response.errors
+    });
+  }
 });
 
 /**
@@ -64,8 +70,8 @@ questionRouter.get('/edit/:id', async (req, res) => {
     const categoryManager = CategoryManager.getInstance();
 
     // Fetch the data.
-    const question = await questionManager.getOne(id);
-    const categories = await categoryManager.getAll();
+    const question = await questionManager.get(id);
+    const categories = await categoryManager.get();
     const difficulties = [1, 2, 3];
 
     res.render('question-form.pug', {
@@ -74,7 +80,11 @@ questionRouter.get('/edit/:id', async (req, res) => {
       categories, difficulties
     });
   } else {
-    res.send();
+    res.render('question-error.pug', {
+      errors: [
+        'Vous devez spécifier un identifiant numérique.'
+      ]
+    });
   }
 });
 
@@ -96,7 +106,9 @@ questionRouter.post('/edit/:id', async (req, res) => {
     if (response.success === true) {
       res.redirect('/question');
     } else {
-      // TODO: Resend page.
+      res.render('question-error.pug', {
+        errors: response.errors
+      });
     }
   }
 });
@@ -114,6 +126,12 @@ questionRouter.post('/delete/:id', async (req, res) => {
     await questionManager.deleteOne(id);
 
     res.redirect('/question');
+  } else {
+    res.render('question-error.pug', {
+      errors: [
+        'Vous devez spécifier un identifiant'
+      ]
+    });
   }
 });
 
