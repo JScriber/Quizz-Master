@@ -23,9 +23,11 @@
             href='/question/edit/' + question.id
           ) Edit
 
-          <form action="POST">
+          form(
+            method="POST"
+            action="/question/delete/" + question.id
+          )
             <button type="submit">Delete</button>
-          </form>
         </td>
       </tr>
   </tbody>
