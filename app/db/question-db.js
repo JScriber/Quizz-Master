@@ -24,7 +24,7 @@ export const database = low(adapter).then(d => {
       },
       {
         id: 1,
-        title: 'Le monde des affaires est-il instable ?',
+        title: 'A quoi sert le CSS dans une application web ?',
         hint: 'Peut-être',
         goodAnswer: 'Yes',
         badAnswer1: 'Absolument',

@@ -6,6 +6,9 @@
     "coverage": "jest --collectCoverage",
     "lint": "npx eslint"
   },
+  "jest": {
+    "testMatch": ["**/tests/**/*.spec.js"]
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",

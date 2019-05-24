@@ -1,6 +1,5 @@
 import { unit, given, when, then } from 'jest-bdd';
-
-import QuestionManager from '../../services/question-manager.js';
+import { QuestionManager } from '../../services/question-manager';
 
 // Creation du scope.
 let scope = {};
@@ -17,31 +16,33 @@ unit(
   - Catégorie: “PHP”
   - Difficulté: “1”
   `, () => {
-    scope.manager = QuestionManager.instance();
+    scope.manager = QuestionManager.getInstance();
   },
-    when('L’utilisateur clique sur le bouton de confirmation.', () => {
+    when('L’utilisateur clique sur le bouton de confirmation.', async () => {
 
       scope.title = 'De quel côté agit le PHP ?';
 
-      scope.response = scope.manager.create({
+      scope.response = await scope.manager.save({
         title: scope.title,
         goodAnswer: 'Côté serveur',
-        badAnswers: [
-          'Côté client',
-          'Côté jardin',
-          'PHP quoi ?'
-        ],
+        badAnswer1: 'Côté client',
+        badAnswer2: 'Côté jardin',
+        badAnswer3: 'PHP quoi ?',
         hint: 'Ce n’est pas côté client !',
-        category: 'PHP',
+        category: 0,
         difficulty: 1
       });
     },
       then(`La question est créée.`, () => {
+
+        // A une réponse.
+        expect(scope.response).toBeTruthy();
+
         // Aucune erreur n'est relevée.
-        expect(scope.response.errors).toBeUndefined();
+        expect(scope.response.success).toBeTruthy();
 
         // L'element a bien été inséré en base.
-        expect(scope.manager.getAll().find(e => e.title === scope.title)).toBeDefined();
+        expect(scope.manager.get().find(e => e.title === scope.title)).toBeDefined();
 
         // Reinitialisation du scope.
         scope = {};
@@ -63,18 +64,20 @@ unit(
   - Catégorie: “PHP”
   - Difficulté: “1”
   `, () => {
-    scope.manager = QuestionManager.instance();
+    scope.manager = QuestionManager.getInstance();
   },
-    when('L’utilisateur clique sur le bouton de confirmation.', () => {
+    when('L’utilisateur clique sur le bouton de confirmation.', async () => {
 
       scope.title = 'De quel côté agit le PHP ?';
 
-      scope.response = scope.manager.create({
+      scope.response = await scope.manager.save({
         title: scope.title,
         goodAnswer: 'Côté serveur',
-        badAnswers: [],
+        badAnswer1: '',
+        badAnswer2: '',
+        badAnswer3: '',
         hint: 'Ce n’est pas côté client !',
-        category: 'PHP',
+        category: 0,
         difficulty: 1
       });
     },
@@ -82,11 +85,11 @@ unit(
       “Vous devez avoir du contenu pour les champs Mauvaise réponse 1 et  Mauvaise réponse 2 et  Mauvaise réponse 3 ”.`, () => {
 
         // Des erreurs ont été relevées.
-        expect(scope.response.errors).toBeDefined();
+        expect(scope.response.success).toBeTruthy();
 
         // Doit contenir un message.
         expect(scope.response.errors[0]).toBe(
-          'Vous devez avoir du contenu pour les champs Mauvaise réponse 1 et  Mauvaise réponse 2 et  Mauvaise réponse 3'
+          'Vous devez renseigner tous les champs.'
         );
 
         // L'element n'a pas été créé par erreur.
@@ -112,13 +115,13 @@ unit(
   - Catégorie: “PHP”
   - Difficulté: “1”
   `, () => {
-    scope.manager = QuestionManager.instance();
+    scope.manager = QuestionManager.getInstance();
   },
-    when('L’utilisateur clique sur le bouton de confirmation.', () => {
+    when('L’utilisateur clique sur le bouton de confirmation.', async () => {
 
       scope.title = 'De quel côté agit le PHP ?';
 
-      scope.response = scope.manager.create({
+      scope.response = await scope.manager.save({
         title: scope.title,
         goodAnswer: 'Côté serveur',
         badAnswers: [
