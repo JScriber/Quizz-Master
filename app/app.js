@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
 // Routes imports.
 import gameRouter from './routes/game.route';
@@ -11,6 +12,13 @@ const PORT = 8080;
 
 // Server creation.
 const server = express();
+
+// Support for JSON bodies.
+server.use(express.json());
+
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
+
 
 // Serves static files in /public directory.
 server.use(express.static(__dirname + 'public'));

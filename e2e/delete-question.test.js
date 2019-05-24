@@ -1,24 +1,21 @@
 module.exports = {
-
-  /**
-   * Accès à un bouton de suppression pour chaque entrée présente dans le tableau.
-   * L’entrée “De quel côté agit le PHP ?” est présente dans la liste.
-   */
-  'delete question' : function (browser) {
-    browser.url(`${browser.launchUrl}/question`)
+  "1) L’utilisateur souhaite supprimer une question. ": function(browser) {
+    browser
+      .url(`${browser.launchUrl}/question`)
       // Given.
-      .waitForElementVisible('body')
+      .waitForElementVisible("body")
       .useXpath() // Every selector now must be xpath.
-      .waitForElementVisible('//tr[text()=\'De quel côté agit le PHP ?\']')
-      .frame('td')
-      .useCss()
+      .waitForElementVisible("//td[text()='Est-ce que vous aimez le PHP ?']")
+      .frameParent()
       // When.
-      .click('button.delete')
+      .click("//button[text()='Delete']")
       .pause(2000)
-      .useXpath()
       // Then.
-      .expect.element('//tr[text()=\'De quel côté agit le PHP ?\']').to.be.not.visible
+      .assert.urlEquals("http://localhost:8080/POST")
 
+      
+      // .expect.element("//td[text()='Est-ce que vous aimez le PHP ?']")
+      // .to.be.not.visible
       .end();
   }
 };
