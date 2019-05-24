@@ -29,7 +29,7 @@
         "path": "screens"
       },
       "desiredCapabilities": {
-        "browserName": "chrome",
+        "browserName": "firefox",
         "marionette": true
       }
     },
