@@ -14,7 +14,7 @@ const questionRouter = express.Router();
  */
 questionRouter.get('/', async (req, res) => {
   const manager = QuestionManager.getInstance();
-  const questions = await manager.getAll();
+  const questions = await manager.get();
 
   res.render('question-list.pug', { data: questions });
 });
@@ -29,7 +29,7 @@ questionRouter.get('/new', async (req, res) => {
   const categoryManager = CategoryManager.getInstance();
 
   // Fetch the data.
-  const categories = await categoryManager.getAll();
+  const categories = await categoryManager.get();
   const difficulties = [1, 2, 3];
 
   res.render('question-form.pug', {
@@ -64,8 +64,8 @@ questionRouter.get('/edit/:id', async (req, res) => {
     const categoryManager = CategoryManager.getInstance();
 
     // Fetch the data.
-    const question = await questionManager.getOne(id);
-    const categories = await categoryManager.getAll();
+    const question = await questionManager.get(id);
+    const categories = await categoryManager.get();
     const difficulties = [1, 2, 3];
 
     res.render('question-form.pug', {

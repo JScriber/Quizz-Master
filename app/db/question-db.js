@@ -57,7 +57,7 @@ export const findAll = async () => {
 export const findOne = async (id) => {
   const questions = await findAll();
 
-  return questions.find(q => q.id === id);
+  return questions.find(q => q.id === Number.parseInt(id));
 };
 
 /**

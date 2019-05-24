@@ -14,14 +14,17 @@ export class QuestionManager {
     return QuestionManager.instance;
   }
 
-  /** Get the list of all the questions. */
-  getAll() {
-    return findAll();
-  }
-
-  /** Get one question. */
-  getOne(id) {
-    return findOne(id);
+  /**
+   * Get the list of all the questions.
+   * @param {*} [id] - Optional ID.
+   * @returns {*} - One or multiple elements if ID.
+   */
+  get(id) {
+    if (id !== undefined) {
+      return findOne(id);
+    } else {
+      return findAll();
+    }
   }
 
   /**

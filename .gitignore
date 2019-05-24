@@ -4,5 +4,6 @@ bin/
 screens/
 report/
 reports/
+database/
 
 selenium-server.log
