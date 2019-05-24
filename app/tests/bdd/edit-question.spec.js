@@ -1,52 +1,47 @@
 import {unit, given, when, then } from 'jest-bdd';
-
-import Question from '../../entities/question.js';
-import QuestionManager from '../../services/question-manager.js';
+import { QuestionManager } from '../../services/question-manager';
 
 let scope = {};
+
 /** L’utilisateur fournit des informations correctes lors de l’édition de la question. */
 unit(
   
   given(`Étant donné que je souhaite répondre un quizz, j’ai besoin de
   répondre à des questions, cependant, il est possible que je souhaite
-  modifier ces question`, () => {
+  modifier ces question`, async () => {
 
-    scope.manager = QuestionManager.instance();
+    scope.manager = QuestionManager.getInstance();
 
-    scope.question =  scope.manager.create({
+    scope.question = await scope.manager.save({
       title:'De quel côté agit le PHP ?',
       goodAnswer: 'Côté serveur',
-      badAnswers: [
-        'Côté client',
-        'Côté jardin',
-        'PHP quoi ?'
-      ],
+      badAnswer1: 'Côté client',
+      badAnswer2: 'Côté jardin',
+      badAnswer3: 'PHP quoi ?',
       hint: 'Ce n’est pas côté client !',
-      category: 'PHP',
+      category: 0,
       difficulty: 1
     });
   },
-    when('L’utilisateur modifie plusieurs des informations', () => {
-      scope.question.object={
+    when('L’utilisateur modifie plusieurs des informations', async () => {
+      scope.question.object = {
         title:'De quel côté agit le JS classique ?',
         goodAnswer: 'Côté client',
-        badAnswers: [
-          'Côté serveur',
-          'Côté base de données',
-          'Côté papier'
-        ],
+        badAnswer1: 'Côté serveur',
+        badAnswer2: 'Côté base de données',
+        badAnswer3: 'Côté papier',
         hint: 'Penser aux vues',
         category: 'JS',
         difficulty: 3
       };
-      scope.manager.update(scope.question.object);
 
+      await scope.manager.save(scope.question.object);
     },
       then(`La question est modifié et l’utilisateur est renvoyé sur 
       la liste des questions avec sa question`, () => {
 
         expect(scope.question.object).toEqual(scope.manager.get(scope.question.object.id))
-        
+
         scope = {};
       })
     )
@@ -58,30 +53,27 @@ unit(
 unit(
   given(`Étant donné que je souhaite répondre un quizz, j’ai besoin de répondre 
   à des questions, cependant, il est possible que je souhaite modifier 
-  ces questions et que je fasse des erreurs lors de la modification.`, () => {
+  ces questions et que je fasse des erreurs lors de la modification.`, async () => {
 
-    scope.manager = QuestionManager.instance();
+    scope.manager = QuestionManager.getInstance();
 
-    scope.question = scope.manager.create({
+    scope.question = await scope.manager.save({
       title:'De quel côté agit le PHP ?',
       goodAnswer: 'Côté serveur',
-      badAnswers: [
-        'Côté client',
-        'Côté jardin',
-        'PHP quoi ?'
-      ],
+      badAnswer1: 'Côté client',
+      badAnswer2: 'Côté jardin',
+      badAnswer3: 'PHP quoi ?',
       hint: 'Ce n’est pas côté client !',
-      category: 'PHP',
+      category: 0,
       difficulty: 1
     });
-
   },
-    when('L’utilisateur modifie une valeur avec une chaine vide', () => {
+    when('L’utilisateur modifie une valeur avec une chaine vide', async () => {
       scope.question.object={
         goodAnswer: ''
       };
 
-      scope.response = scope.manager.update(scope.question.object);
+      scope.response = await scope.manager.save(scope.question.object);
     },
       then(`ester sur la page, et lui indiquer les raisons pour lesquelles 
       son action est invalide. Le message : “Le champs ne peut pas être 
@@ -101,26 +93,24 @@ unit(
   
   given(`Étant donné que l’utilisateur peut modifier une question, 
   il est possible que les réponses viennent se multiplier lors de 
-  l’édition.`, () => {
-    scope.manager = QuestionManager.instance();
+  l’édition.`, async () => {
+    scope.manager = QuestionManager.getInstance();
 
-    scope.question = scope.manager.create({
+    scope.question = await scope.manager.save({
       title:'De quel côté agit le PHP ?',
       goodAnswer: 'Côté serveur',
-      badAnswers: [
-        'Côté client',
-        'Côté jardin',
-        'PHP quoi ?'
-      ],
+      badAnswer1: 'Côté client',
+      badAnswer2: 'Côté jardin',
+      badAnswer3: 'PHP quoi ?',
       hint: 'Ce n’est pas côté client !',
-      category: 'PHP',
+      category: 0,
       difficulty: 1
     });
   },
     when(`L’utilisateur change le contenu de la bonne 
-    réponse avec le meme contenu d'une mauvaise réponse`, () => {
+    réponse avec le meme contenu d'une mauvaise réponse`, async () => {
       scope.question.object.goodAnswer = 'Côté client';
-      scope.response = scope.manager.update(scope.question.object);
+      scope.response = await scope.manager.save(scope.question.object);
     },
       then(`Vu que la bonne réponse duplique une mauvaise réponse, 
       rester sur la page, et lui indiquer les raisons pour lesquelles 
@@ -140,25 +130,24 @@ unit(
   
   given(` Étant donné que l’utilisateur peut modifier une question, il est 
   possible que les réponses viennent se multiplier lors de l’édition. 
-  Données utilisées.`, () => {
-  scope.manager = QuestionManager.instance();
-    scope.question = scope.manager.create({
+  Données utilisées.`, async () => {
+    scope.manager = QuestionManager.getInstance();
+
+    scope.question = await scope.manager.save({
       title:'De quel côté agit le PHP ?',
       goodAnswer: 'Côté serveur',
-      badAnswers: [
-        'Côté client',
-        'Côté jardin',
-        'PHP quoi ?'
-      ],
+      badAnswer1: 'Côté client',
+      badAnswer2: 'Côté jardin',
+      badAnswer3: 'PHP quoi ?',
       hint: 'Ce n’est pas côté client !',
-      category: 'PHP',
+      category: 0,
       difficulty: 1
     });
   },
     when(`L’utilisateur change le contenu de la deuxième mauvaise réponse 
-    avec le meme label qu'une autre mauvaise réponse`, () => {
-      scope.question.object.badAnswers[1] = 'Côté client';
-      scope.response = scope.manager.update(scope.question.object);
+    avec le meme label qu'une autre mauvaise réponse`, async () => {
+
+      scope.response = await scope.manager.save(scope.question.object);
     },
       then(`Vu que la mauvaise réponse duplique une autre mauvaise réponse,
        rester sur la page, et lui indiquer les raisons pour lesquelles son 
