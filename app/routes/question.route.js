@@ -80,23 +80,41 @@ questionRouter.get('/edit/:id', async (req, res) => {
 
 /**
  * Updates the question.
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
-questionRouter.post('/edit/:id', ({ body }, res) => {
+questionRouter.post('/edit/:id', async (req, res) => {
+  const id = Number.parseInt(req.params.id);
+  const body = req.body;
 
-  const questionManager = QuestionManager.getInstance();
+  if (Number.isInteger(id)) {
+    const questionManager = QuestionManager.getInstance();
+    body.id = id;
 
-  questionManager.save(body);
+    const response = await questionManager.save(body);
 
-  res.redirect('/question');
+    if (response.success === true) {
+      res.redirect('/question');
+    } else {
+      // TODO: Resend page.
+    }
+  }
 });
 
 /**
  * Deletes the given question.
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
-questionRouter.delete('/:id', (req, res) => res.send());
+questionRouter.post('/delete/:id', async (req, res) => {
+  const id = Number.parseInt(req.params.id);
+
+  if (Number.isInteger(id)) {
+    const questionManager = QuestionManager.getInstance();
+    await questionManager.deleteOne(id);
+
+    res.redirect('/question');
+  }
+});
 
 export default questionRouter;
