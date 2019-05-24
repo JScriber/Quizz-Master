@@ -42,4 +42,4 @@ npm run lint [target file]
 ## Drivers for Nightwatch (end-to-end tests)
 - [Selenium](http://selenium-release.storage.googleapis.com/index.html)
 - [Firefox](https://github.com/mozilla/geckodriver/releases)
-- [Chrome](https://chromedriver.chromium.org/)
+- [Chrome](https://sites.google.com/a/chromium.org/chromedriver/downloads)
