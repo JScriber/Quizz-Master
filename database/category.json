@@ -1,0 +1,16 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "PHP"
+    },
+    {
+      "id": 1,
+      "name": "JS"
+    },
+    {
+      "id": 2,
+      "name": "Webmarketing"
+    }
+  ]
+}

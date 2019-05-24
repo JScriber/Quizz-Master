@@ -13,13 +13,23 @@ export const database = low(adapter).then(d => {
     questions: [
       {
         id: 0,
-        title: 'Est-ce que vous aimez le PHP ?',
-        category: 1,
-        difficulty: 1
+        title: 'De quel côté agit le PHP ?',
+        hint: 'Ce n’est pas côté client !',
+        goodAnswer: 'Côté serveur',
+        badAnswer1: 'Côté client',
+        badAnswer2: 'Côté jardin',
+        badAnswer3: 'PHP quoi ?',
+        category: 0,
+        difficulty: 1,
       },
       {
         id: 1,
         title: 'Le monde des affaires est-il instable ?',
+        hint: 'Peut-être',
+        goodAnswer: 'Yes',
+        badAnswer1: 'Absolument',
+        badAnswer2: 'Moyen',
+        badAnswer3: 'Légèrement',
         category: 2,
         difficulty: 3
       }
@@ -49,3 +59,26 @@ export const findOne = async (id) => {
 
   return questions.find(q => q.id === id);
 };
+
+/**
+ * Persists the question in the database.
+ * @param {*} body 
+ */
+export const save = async (body) => {
+
+  const db = await database;
+
+  const nextId = await db.get('id').value() + 1;
+
+  await db.update('id', n => n + 1).write();
+
+  const data = {
+    ... body,
+    id: nextId,
+    category: Number.parseInt(body.category),
+    difficulty: Number.parseInt(body.difficulty),
+  };
+
+  return db.get('questions').push(data).write();
+}
+

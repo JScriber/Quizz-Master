@@ -43,7 +43,13 @@ questionRouter.get('/new', async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-questionRouter.post('/new', (req, res) => res.send());
+questionRouter.post('/new', ({ body }, res) => {
+
+  const questionManager = QuestionManager.getInstance();
+  questionManager.save(body);
+
+  res.redirect('/question');
+});
 
 /**
  * Form for edit question.
@@ -77,7 +83,14 @@ questionRouter.get('/edit/:id', async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-questionRouter.post('/edit/:id', (req, res) => res.send());
+questionRouter.post('/edit/:id', ({ body }, res) => {
+
+  const questionManager = QuestionManager.getInstance();
+
+  questionManager.save(body);
+
+  res.redirect('/question');
+});
 
 /**
  * Deletes the given question.
