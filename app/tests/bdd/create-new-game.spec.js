@@ -11,12 +11,11 @@ unit(
     () => {
       scope.manager = GameManager.instance(); //singleton
 
-      const game = new Game();
-
-      game.nameUser = "Jean";
-      game.difficulty = 2;
-      game.category = "PHP";
-      scope.game = game;
+      let pseudo = "Jeremy";
+      let category = "PHP";
+      let difficulty = 2;
+      
+      scope.game = new Game(pseudo,category,difficulty);
     },
     when(
       "Il clique sur le bouton de validation",
@@ -24,7 +23,7 @@ unit(
         scope.manager.add(scope.game);
       },
       then(
-        `Toute les informations sont remplis, l’utilisateur est rediriger vers la première page du quiz`,
+        `Toute les informations sont remplis, l’utilisateur est redirigé vers la première page du quiz`,
         () => {
           const name = scope.game.nameUser;
           const difficulty = scope.game.difficulty;
@@ -56,26 +55,14 @@ unit(
     when(
       "Il clique sur le bouton de validation",
       () => {
-        scope.manager.add(scope.game);
+        scope.result = scope.manager.add(scope.game);
       },
       then(
         `Il manque des informations, l’utilisateur reste sur la page le message suivant s’affiche: 
         “ Vous devez remplir le champ Nom d’utilisateur”`,
         () => {
-          const name = scope.game.nameUser;
-          const difficulty = scope.game.difficulty;
-          const category = scope.game.category;
-          expect(name).not.toBeNull();
-          expect(difficulty).not.toBeNull();
-          expect(category).not.toBeNull();
-          const result = scope.manager.create({
-            name: 'bla',
-            ...
-          });
-          if (result.errors) {
-            // TODO
-          }
-          // réinitialisation du scope
+          expect(scope.result.errors).toBeDefined();
+
           scope = {};
         }
       )
