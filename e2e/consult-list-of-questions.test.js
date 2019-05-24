@@ -13,7 +13,7 @@ module.exports = {
       // Then.
       .assert.urlEquals(`${browser.launchUrl}/question`)
       .pause(4000)
-      .waitForElementVisible("//td[text()='Est-ce que vous aimez le PHP ?']")
+      .waitForElementVisible("//td[text()='De quel côté agit le PHP ?']")
       .waitForElementVisible(
         "//td[text()='Le monde des affaires est-il instable ?']"
       )

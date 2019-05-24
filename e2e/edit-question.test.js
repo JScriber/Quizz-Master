@@ -1,51 +1,85 @@
-// module.exports = {
+module.exports = {
+  "1) Informations correctes lors de l’édition de la question": function(
+    browser
+  ) {
+    browser
+      .url(`${browser.launchUrl}/question/edit/0`)
 
-//   /**
-//     Étant donné que je souhaite répondre un quizz, j’ai besoin de répondre à des questions, cependant, il est possible que je souhaite modifier ces questions. Données utilisées : 
-//       - Question : “De quel côté agit le PHP ?”
-//       - Bonne réponse :”Côté serveur”
-//       - Mauvaise réponse 1 : “ Côté client”
-//       - Mauvaise réponse 2 :”Côté jardin”
-//       - Mauvaise réponse 3 :”PHP quoi ?”
-//       - Indice : “Ce n’est pas côté client !”
-//       - Catégorie: “PHP”
-//       - Difficulté: “1”
-//       - Les catégories disponibles sont les suivantes: PHP, JS, et WebMarketing.
-//       - Les difficultés disponibles sont les suivantes: 1, 2, et 3.
-//    */
-//   'Correct update of a question' : function (browser) {
-//     browser.url(`${browser.launchUrl}/question/edit/1`)
+      //Given.
+      .waitForElementVisible("body")
+      .pause(4000)
+      .setValue("input[name=title]", "De quel côté agit le JS classique ?")
+      .setValue("input[name=goodAnswer]", "Côté client")
+      .setValue("input[name=badAnswer1]", "Côté serveur")
+      .setValue("input[name=badAnswer2]", "Côté base de données")
+      .setValue("input[name=badAnswer3]", "Côté papier")
+      .setValue("input[name=hint]", "Penser aux vues.")
+      // When.
+      .pause(4000)
+      .useXpath() // Every selector now must be xpath.
+      .click("//button[text()='Valider']")
 
-//       /*
-//         When. L’utilisateur modifie plusieurs des informations suivantes : 
-//           Intitulé. Changé en “De quel côté agit le JS classique ?”;
-//           Bonne réponse. Changé en “Côté client”;
-//           Mauvaises réponses. Changé en : 
-//           “Côté serveur” ;
-//           “Côté base de données” ;
-//           “Côté papier”.
-//           Indice. Changé en “Penser aux vues.” ;
-//           Catégorie. Changé en “JS” ;
-//           Difficulté. Changé à 3.
-//         et qu’il clique sur le bouton de confirmation.
-//       */
-//       .waitForElementVisible('body')
-//       .setValue('input[name=title]', "De quel côté agit le JS classique ?")
-//       .setValue('input[name=goodAnswer]', "Côté client")
-//       .setValue('input[name=badAnswer1]', "Côté serveur")
-//       .setValue('input[name=badAnswer2]', "Côté base de données")
-//       .setValue('input[name=badAnswer3]', "Côté papier")
-//       .setValue('input[name=hint]', "Penser aux vues.")
-//       .click('select[id="category"] option[value="JS"]')
-//       .click('select[id="difficulty"] option[value="3"]')
+      // Then.
+      .assert.urlEquals(`${browser.launchUrl}/question`)
+      .pause(4000)
+      .end();
+  },
 
-//       // When.
-//       .click('button.submit')
-//       .pause(1000)
+  "2) Informations erronées lors de la modification": function(browser) {
+    browser
+      .url(`${browser.launchUrl}/question/edit/0`)
 
-//       // Then.
-//       .assert.urlEquals(`${browser.launchUrl}/question`)
+      //Given.
+      .useCss()
+      .waitForElementVisible("body")
+      .pause(4000)
+      .setValue("input[name=title]", "")
+      // When.
+      .useXpath() // Every selector now must be xpath.
+      .pause(4000)
+      .click("//button[text()='Valider']")
 
-//       .end();
-//   }
-// };
+      // Then.
+      .assert.urlEquals(`${browser.launchUrl}/question/0`)
+      .pause(4000)
+      .end();
+  },
+  "3) Multiplication de réponses (bonne et mauvaise)": function(browser) {
+    browser
+      .url(`${browser.launchUrl}/question/edit/0`)
+
+      //Given.
+      .useCss()
+      .waitForElementVisible("body")
+      .pause(4000)
+      .setValue("input[name=goodAnswer]", "Côté jardin")
+      // When.
+      .useXpath() // Every selector now must be xpath.
+      .pause(4000)
+      .click("//button[text()='Valider']")
+
+      // Then.
+      .waitForElementVisible("#errors")
+      .pause(4000)
+      .end();
+  },
+  "4) Multiplication de mauvaises réponses": function(browser) {
+    browser
+      .url(`${browser.launchUrl}/question/edit/0`)
+
+      //Given.
+      .useCss()
+      .waitForElementVisible("body")
+      .pause(4000)
+      .setValue("input[name=badAnswer2]", "Côté client")
+      // When.
+      .useXpath() // Every selector now must be xpath.
+      .pause(4000)
+      .click("//button[text()='Valider']")
+
+      // Then.
+      .waitForElementVisible("#errors")
+      .pause(4000)
+      .end();
+  }
+};
