@@ -2,6 +2,7 @@
   "scripts": {
     "serve": "babel-node ./app/app.js",
     "test": "jest",
+    "e2e": "nightwatch",
     "coverage": "jest --collectCoverage",
     "lint": "npx eslint"
   },
