@@ -1,0 +1,26 @@
+<div id="containerNewGame" class="containerNewGame">
+  <div class="titleNewgame">Nouvelle partie</div>
+
+  <form action="" method="get" class="new-game">
+    <div class="new-game">
+      <label for="name">Nom du joueur: </label>
+      <input type="text" name="name" id="name" required>
+    </div>
+    <div class="new-game">
+      <label for="difficulty">Difficulté: </label>
+      <input type="number" name="difficulty" id="difficulty"  min="1" max="3" required>
+    </div>
+    <div class="new-game">
+      <label for="difficulty">Catégorie: </label>
+      <input list="categories" name="categorie" required>
+        <datalist id="categories">
+          <option value="PHP">
+          <option value="js">
+          <option value="WebMarketing">
+        </datalist>
+    </div>
+    <div class="new-game">
+      <input type="submit" value="Jouer">
+    </div>
+  </form>
+</div>

@@ -1,0 +1,9 @@
+.body{
+  display:flex;
+}
+.containerNewGame{
+  margin:auto;
+}
+.titleNewgame{
+  text-align: center;
+}
