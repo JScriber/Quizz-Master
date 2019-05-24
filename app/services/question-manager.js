@@ -85,8 +85,19 @@ export class QuestionManager {
    * @param {*} lists
    */
   containDuplicate(lists) {
-    // TODO: Implement.
+    const blacklist = [];
+    let containsDuplicate = false;
 
-    return false;
+    for (let i = 0; i < lists.length; i ++) {
+      const l = lists[i];
+
+      if (blacklist.includes(l)) {
+        containsDuplicate = true;
+      } else {
+        blacklist.push(l);
+      }
+    }
+
+    return containsDuplicate;
   }
 }

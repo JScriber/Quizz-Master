@@ -43,12 +43,18 @@ questionRouter.get('/new', async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-questionRouter.post('/new', ({ body }, res) => {
+questionRouter.post('/new', async ({ body }, res) => {
 
   const questionManager = QuestionManager.getInstance();
-  questionManager.save(body);
+  const response = await questionManager.save(body);
 
-  res.redirect('/question');
+  if (response.success === true) {
+    res.redirect('/question');
+  } else {
+    res.render('question-error.pug', {
+      errors: response.errors
+    });
+  }
 });
 
 /**
@@ -74,7 +80,11 @@ questionRouter.get('/edit/:id', async (req, res) => {
       categories, difficulties
     });
   } else {
-    res.send();
+    res.render('question-error.pug', {
+      errors: [
+        'Vous devez spécifier un identifiant numérique.'
+      ]
+    });
   }
 });
 
@@ -96,7 +106,9 @@ questionRouter.post('/edit/:id', async (req, res) => {
     if (response.success === true) {
       res.redirect('/question');
     } else {
-      // TODO: Resend page.
+      res.render('question-error.pug', {
+        errors: response.errors
+      });
     }
   }
 });
@@ -114,6 +126,12 @@ questionRouter.post('/delete/:id', async (req, res) => {
     await questionManager.deleteOne(id);
 
     res.redirect('/question');
+  } else {
+    res.render('question-error.pug', {
+      errors: [
+        'Vous devez spécifier un identifiant'
+      ]
+    });
   }
 });
 
