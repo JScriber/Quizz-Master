@@ -12,10 +12,9 @@ module.exports = {
       .click("//button[text()='Delete']")
       .pause(4000)
       // Then.
-      .assert.urlEquals("http://localhost:8080/POST")
+      .assert.urlEquals("http://localhost:8080/question")
+      .waitForElementNotPresent("//td[text()='De quel côté agit le PHP ?']")
       .pause(4000)
-      // .expect.element("//td[text()='Est-ce que vous aimez le PHP ?']")
-      // .to.be.not.visible
       .end();
   }
 };
