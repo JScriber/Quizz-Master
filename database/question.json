@@ -1,0 +1,31 @@
+{
+  "id": 1,
+  "questions": [
+    {
+      "id": 0,
+      "title": "Est-ce que vous aimez le PHP ?",
+      "category": 1,
+      "difficulty": 1
+    },
+    {
+      "id": 1,
+      "title": "Le monde des affaires est-il instable ?",
+      "category": 2,
+      "difficulty": 3
+    }
+  ],
+  "categories": [
+    {
+      "id": 0,
+      "name": "PHP"
+    },
+    {
+      "id": 1,
+      "name": "JS"
+    },
+    {
+      "id": 2,
+      "name": "Webmarketing"
+    }
+  ]
+}

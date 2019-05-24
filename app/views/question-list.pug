@@ -1,0 +1,32 @@
+<h1>Liste de toutes les questions.</h1>
+
+<a href="/question/new">Créer une question</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>Intitulé</th>
+      <th>Catégorie</th>
+      <th>Difficulté</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    each question in data
+      <tr>
+        td= question.title
+        td= question.category.name
+        td= question.difficulty
+        <td>
+          a(
+            href='/question/edit/' + question.id
+          ) Edit
+
+          <form action="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+  </tbody>
+</table>
